@@ -48,6 +48,7 @@ Available themes are in `tkmux/lua/themes/`:
 
 - `default`
 - `tokyo_night`
+- `minimal`
 
 Select theme:
 
@@ -93,6 +94,25 @@ set -g @tkmux_user_bg "red"
 ```tmux
 set -g @tkmux_right_skip_empty true
 set -g @tkmux_playing_max_len 30
+set -g @tkmux_cpu_high 80
+set -g @tkmux_cpu_medium 40
+set -g @tkmux_ram_high 16
+set -g @tkmux_ram_medium 12
+```
+
+### Segment ordering
+
+```tmux
+set -g @tkmux_sections_left "session,uptime"
+set -g @tkmux_sections_right "playing_info,cpu,ram,date,user"
+```
+
+### Per-segment enable
+
+```tmux
+set -g @tkmux_cpu_enabled true
+set -g @tkmux_playing_info_enabled false
+set -g @tkmux_window_enabled true
 ```
 
 ## Advanced config (optional)

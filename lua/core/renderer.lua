@@ -34,6 +34,10 @@ function M.make_styles(config, values, sections, sep, right)
   local render_sections = {}
 
   for _, section in ipairs(sections) do
+    local style = config.styles[section]
+    if style and style.enabled == false then
+      goto continue_build
+    end
     local value = values[section]()
     if right and config.options.right_skip_empty and value == "" then
       goto continue_build

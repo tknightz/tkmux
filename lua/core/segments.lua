@@ -23,10 +23,14 @@ function M.cpu(config)
   config.styles.cpu.fg = config.styles.cpu.fg_default or config.styles.cpu.fg
   local usage = tonumber(shell("bash -c \"awk '{u=\\$2+\\$4; t=\\$2+\\$4+\\$5; if (NR==1){u1=u; t1=t;} else printf \\\"%d\\\", (\\$2+\\$4-u1) * 100 / (t-t1); }' <(grep 'cpu ' /proc/stat) <(sleep 1;grep 'cpu ' /proc/stat)\""))
 
+  local thresholds = config.options.cpu_thresholds or {}
+  local high = thresholds.high or 80
+  local medium = thresholds.medium or 40
+
   if usage then
-    if usage > 80 then
+    if usage > high then
       config.styles.cpu.fg = config.styles.cpu.fg_high
-    elseif usage > 40 then
+    elseif usage > medium then
       config.styles.cpu.fg = config.styles.cpu.fg_medium
     else
       config.styles.cpu.fg = "blue"
@@ -59,10 +63,14 @@ end
 function M.ram(config)
   config.styles.ram.fg = config.styles.ram.fg_default or config.styles.ram.fg
   local usage = tonumber(shell("free -m | awk 'NR==2 {print substr( $3 / 1000, 1, 3 )}'"))
+
+  local thresholds = config.options.ram_thresholds or {}
+  local high = thresholds.high or 16
+  local medium = thresholds.medium or 12
   if usage then
-    if usage > 16 then
+    if usage > high then
       config.styles.ram.fg = config.styles.ram.fg_high
-    elseif usage > 12 then
+    elseif usage > medium then
       config.styles.ram.fg = config.styles.ram.fg_medium
     else
       config.styles.ram.fg = "green"
