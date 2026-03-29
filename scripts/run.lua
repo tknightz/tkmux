@@ -6,9 +6,13 @@ local function add_module_path()
     return
   end
 
-  local root = dir:match("^(.*)/scripts")
-  if root and not package.path:find(root, 1, true) then
-    package.path = root .. "/lua/?.lua;" .. root .. "/lua/?/init.lua;" .. root .. "/lua/?/?.lua;" .. root .. "/lua/tkmux/?.lua;" .. root .. "/lua/tkmux/?/init.lua;" .. root .. "/lua/tkmux/?/?.lua;" .. package.path
+  -- Handle both absolute paths (/home/user/tkmux/scripts) and relative paths (scripts)
+  local root = dir:match("^(.*)/scripts") or (dir == "scripts" and ".")
+  if root then
+    local lua_path = root .. "/lua/?.lua;" .. root .. "/lua/?/init.lua;" .. root .. "/lua/?/?.lua;" .. root .. "/lua/tkmux/?.lua;" .. root .. "/lua/tkmux/?/init.lua;" .. root .. "/lua/tkmux/?/?.lua;"
+    if not package.path:find(lua_path, 1, true) then
+      package.path = lua_path .. package.path
+    end
   end
 end
 

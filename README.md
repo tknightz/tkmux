@@ -13,38 +13,38 @@ Lua-powered tmux statusline + window status plugin with themes and tmux option o
 Add the plugin and options to `~/.tmux.conf`:
 
 ```tmux
-set -g @plugin 'tkmux'
-set -g @tkmux_theme 'tokyo_night'
-
-# Required: wire the scripts
-set -g status-left "#(lua ~/.tmux/plugins/tkmux/scripts/run.lua status-left)"
-set -g status-right "#(lua ~/.tmux/plugins/tkmux/scripts/run.lua status-right)"
-
-# Optional: window status
-set -g window-status-current-format "#(lua ~/.tmux/plugins/tkmux/scripts/run.lua window-active)"
-set -g window-status-format "#(lua ~/.tmux/plugins/tkmux/scripts/run.lua window-common)"
+set -g @plugin 'tknightz/tkmux'
+set -g @tkmux_theme 'default'
 
 run '~/.tmux/plugins/tpm/tpm'
 ```
 
-Then reload tmux:
+Then reload tmux and install plugins:
 
 ```bash
+# Press prefix + I (capital i) to install plugins via TPM
+# Or reload config:
 tmux source-file ~/.tmux.conf
 ```
+
+The plugin automatically configures `status-left`, `status-right`, and window status formats.
 
 ## Install (local / dev)
 
 Clone into your repo and point tmux to the scripts:
 
 ```tmux
-set -g status-left "#(lua ~/Repos/.tmux/tkmux/scripts/run.lua status-left)"
-set -g status-right "#(lua ~/Repos/.tmux/tkmux/scripts/run.lua status-right)"
+set -g status-left "#(lua ~/Repos/tkmux/scripts/run.lua status-left)"
+set -g status-right "#(lua ~/Repos/tkmux/scripts/run.lua status-right)"
+
+# Optional: window status
+set -g window-status-current-format "#(lua ~/Repos/tkmux/scripts/run.lua window-active)"
+set -g window-status-format "#(lua ~/Repos/tkmux/scripts/run.lua window-common)"
 ```
 
 ## Themes
 
-Available themes are in `tkmux/lua/themes/`:
+Available themes are in `lua/themes/`:
 
 - `default`
 - `tokyo_night`
@@ -70,8 +70,8 @@ set -g @tkmux_color_accent "#ff00ff"
 ### Separators
 
 ```tmux
-set -g @tkmux_sep_left ""
-set -g @tkmux_sep_right ""
+set -g @tkmux_sep_left ""
+set -g @tkmux_sep_right ""
 set -g @tkmux_sep_right_in ""
 ```
 
